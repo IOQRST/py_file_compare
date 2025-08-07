@@ -1,14 +1,17 @@
-import flet as ft
+import tkinter as tk
+import logic
+from tkinter import filedialog
+
+root = tk.Tk()
+root.title("File compare tool")
 
 
-def main(page: ft.Page):
-    page.title = "File Compare Tool"
+def compare_files():
+    lines = logic.get_unique_lines(filedialog.askopenfilenames(filetypes=[("Text files", "*.txt")]))
+    path = filedialog.asksaveasfilename(filetypes=[("Text Files", "*.txt")])
+    logic.save_results(lines, path)
 
-    file1_display = ft.TextField(label="Первый файл", read_only=True)
-    file2_display = ft.TextField(label="Второй файл", read_only=True)
+open_button = tk.Button(root, text="Compare text files", command=compare_files)
+open_button.pack()
 
-    page.add(
-        file1_display,
-        file2_display
-    )
-ft.app(main)
+root.mainloop()

@@ -15,24 +15,23 @@ def read_lines(file_path: str) -> list[str]:
         return []
 
 
-def get_unique_lines(file1_path: str, file2_path: str) -> list[str]:
+def get_unique_lines(file_paths: list) -> list[str]:
     """
-    Сравнивает два списка строк из файлов. Возвращает список уникальных строк из двух списков.
+    Сравнивает несколько файлов построчно. Возвращает список уникальных строк.
 
     Args:
-        file1_path: Путь к файлу 1.
-        file2_path: Путь к файлу 2.
+        file_paths: список путей к файлам.
     Returns:
-        Список уникальных строк, собранный из двух файлов.
+        Список уникальных строк, собранный из списка файлов.
     """
-    lines1 = read_lines(file1_path)
-    lines2 = read_lines(file2_path)
-
     unique_lines = set()
-    unique_lines.update(lines1)
-    unique_lines.update(lines2)
-    if not unique_lines:
-        print("Файлы пустые или не содержат данных")
+
+    for i in file_paths:
+        lines = read_lines(i)
+        unique_lines.update(lines)
+        if not unique_lines:
+            print("Файлы пустые или не содержат данных")
+
     return sorted(unique_lines)
 
 
@@ -54,6 +53,5 @@ def save_results(strings: list[str], output_path: str) -> None:
     except (IOError, PermissionError) as e:
         print(f"Ошибка записи файла: {e}")
 
-# unique_lines = get_unique_lines("1.txt", "2.txt")
-unique_lines = get_unique_lines("notexistentfile.txt", "test_data/2.txt")
+unique_lines = get_unique_lines(["test_data/1.txt", "test_data/2.txt"])
 save_results(unique_lines, "test_data/test.txt")
