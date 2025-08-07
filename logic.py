@@ -52,6 +52,3 @@ def save_results(strings: list[str], output_path: str) -> None:
             file.write("\n".join(strings))
     except (IOError, PermissionError) as e:
         print(f"Ошибка записи файла: {e}")
-
-unique_lines = get_unique_lines(["test_data/1.txt", "test_data/2.txt"])
-save_results(unique_lines, "test_data/test.txt")
